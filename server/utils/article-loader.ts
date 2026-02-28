@@ -4,12 +4,21 @@ import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
+import lunr from 'lunr';
 import type { Article, ArticleMeta, Category, Heading } from '../types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ARTICLES_DIR = path.join(__dirname, '../../content/articles');
+
+// Shared slugify function - used by both marked renderer and extractHeadings
+export function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+}
+
+// Lunr search index for performance
+let searchIndex: lunr.Index | null = null;
 
 // In-memory cache
 const articlesCache = new Map<string, Article>();
@@ -62,7 +71,7 @@ marked.use({
       return `\u003cpre\u003e\u003ccode class="hljs language-${validLang}"\u003e${highlighted}\u003c/code\u003e\u003c/pre\u003e`;
     },
     heading({ text, depth }: { text: string; depth: number }) {
-      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+      const id = slugify(text);
       return `\u003ch${depth} id="${id}"\u003e${text}\u003c/h${depth}\u003e`;
     },
     table({ header, rows }: { header: string[]; rows: string[][] }) {
@@ -128,7 +137,10 @@ export async function loadArticles(): Promise<void> {
     updateCategoryCounts();
 
     console.log(`Loaded ${articlesList.length} articles`);
-  } catch (error) {
+    
+    // Build search index for performant searches
+    buildSearchIndex();
+  } catch {
     console.error('Error loading articles:', error);
     // Create articles directory if it doesn't exist
     await fs.mkdir(ARTICLES_DIR, { recursive: true });
@@ -216,19 +228,50 @@ export function getRelatedArticles(slug: string, limit: number = 3): ArticleMeta
     .slice(0, limit);
 }
 
-export function searchArticles(query: string): ArticleMeta[] {
-  const lowercaseQuery = query.toLowerCase();
-  
-  return articlesList.filter(article => {
-    const searchable = [
-      article.title,
-      article.description,
-      ...article.tags,
-      articlesCache.get(article.slug)?.content || ''
-    ].join(' ').toLowerCase();
-    
-    return searchable.includes(lowercaseQuery);
+// Build lunr search index for performance
+function buildSearchIndex(): void {
+  searchIndex = lunr(function () {
+    this.ref('slug');
+    this.field('title', { boost: 10 });
+    this.field('description', { boost: 5 });
+    this.field('tags', { boost: 3 });
+    this.field('content');
+
+    articlesList.forEach(article => {
+      const fullArticle = articlesCache.get(article.slug);
+      this.add({
+        slug: article.slug,
+        title: article.title,
+        description: article.description,
+        tags: article.tags.join(' '),
+        content: fullArticle?.content || ''
+      });
+    });
   });
+}
+
+export function searchArticles(query: string): ArticleMeta[] {
+  if (!searchIndex) {
+    buildSearchIndex();
+  }
+  
+  try {
+    const results = searchIndex!.search(query);
+    return results.map(result => articlesList.find(a => a.slug === result.ref)!).filter(Boolean);
+  } catch {
+    // Fallback to simple search if query syntax is invalid
+    const lowercaseQuery = query.toLowerCase();
+    return articlesList.filter(article => {
+      const searchable = [
+        article.title,
+        article.description,
+        ...article.tags,
+        articlesCache.get(article.slug)?.content || ''
+      ].join(' ').toLowerCase();
+      
+      return searchable.includes(lowercaseQuery);
+    });
+  }
 }
 
 export function getCategories(): Category[] {

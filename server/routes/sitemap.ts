@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getAllArticles } from '../utils/article-loader.js';
+import { getAllArticles, getCategories } from '../utils/article-loader.js';
 import { SITE_URL } from '../index.js';
 
 const router = Router();
@@ -22,10 +22,10 @@ router.get('/', (req: Request, res: Response) => {
       { url: '/disclaimer', priority: '0.4', changefreq: 'yearly' }
     ];
 
-    // Category pages
-    const categories = ['coding-assistants', 'ai-models', 'devops', 'web-development', 'tools-comparison'];
+    // Category pages - dynamically fetch from article-loader instead of hardcoded
+    const categories = getCategories();
     const categoryUrls = categories.map(cat => ({
-      url: `/category/${cat}`,
+      url: `/category/${cat.slug}`,
       priority: '0.7',
       changefreq: 'weekly'
     }));
@@ -40,15 +40,15 @@ router.get('/', (req: Request, res: Response) => {
 
     const allUrls = [...staticPages, ...categoryUrls, ...articleUrls];
 
-    const sitemap = `\u003c?xml version="1.0" encoding="UTF-8"?\u003e
-\u003curlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\u003e
-${allUrls.map(item => `  \u003curl\u003e
-    \u003cloc\u003e${baseUrl}${item.url}\u003c/loc\u003e
-    \u003cpriority\u003e${item.priority}\u003c/priority\u003e
-    \u003cchangefreq\u003e${item.changefreq}\u003c/changefreq\u003e${item.lastmod ? `
-    \u003clastmod\u003e${item.lastmod}\u003c/lastmod\u003e` : ''}
-  \u003c/url\u003e`).join('\n')}
-\u003c/urlset\u003e`;
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allUrls.map(item => `  <url>
+    <loc>${baseUrl}${item.url}</loc>
+    <priority>${item.priority}</priority>
+    <changefreq>${item.changefreq}</changefreq>${item.lastmod ? `
+    <lastmod>${item.lastmod}</lastmod>` : ''}
+  </url>`).join('\n')}
+</urlset>`;
 
     res.setHeader('Content-Type', 'application/xml');
     res.send(sitemap);
