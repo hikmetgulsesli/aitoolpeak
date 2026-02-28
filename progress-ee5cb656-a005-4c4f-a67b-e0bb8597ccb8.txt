@@ -1,0 +1,25 @@
+=== US-010: Static Pages (About, Contact, Privacy, Terms, Disclaimer) ===
+COMPLETED: 2026-03-01T01:16:00+03:00
+FILES CHANGED: 
+- src/pages/About.tsx (new)
+- src/pages/Contact.tsx (new)
+- src/pages/Privacy.tsx (new)
+- src/pages/Terms.tsx (new)
+- src/pages/Disclaimer.tsx (new)
+- src/components/layout/Header.tsx (new)
+- src/components/layout/Footer.tsx (new)
+- src/components/layout/Layout.tsx (new)
+- src/components/seo/SEOHead.tsx (new)
+- src/lib/types.ts (new)
+- src/lib/constants.ts (new)
+- src/lib/api.ts (new)
+- src/App.tsx (updated with routing)
+KEY DECISIONS: 
+- Created comprehensive About page with E-E-A-T signals (Experience, Expertise, Authoritativeness, Trustworthiness)
+- Contact form with client-side validation and success/error states, submits to /api/contact
+- Privacy Policy includes AdSense compliance (Google cookies, DoubleClick, data collection, opt-out links)
+- Terms of Service includes standard terms, prohibited activities, user representations
+- Disclaimer includes content accuracy statement and FTC-compliant affiliate disclosure
+- Used Lucide React for icons
+- All pages have SEO meta tags via react-helmet-async
+DEPENDENCIES ADDED: lucide-react (via --legacy-peer-deps)
