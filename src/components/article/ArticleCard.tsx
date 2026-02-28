@@ -1,4 +1,5 @@
 import type { ArticleMeta } from '../../lib/types.js';
+import { CATEGORY_LABELS } from '../../lib/constants.js';
 
 interface ArticleCardProps {
   article: ArticleMeta;
@@ -12,14 +13,6 @@ export function ArticleCard({ article }: ArticleCardProps) {
       month: 'short',
       day: 'numeric',
     });
-  };
-
-  const categoryLabels: Record<string, string> = {
-    'coding-assistants': 'Coding Assistants',
-    'ai-models': 'AI Models',
-    'devops': 'DevOps',
-    'web-development': 'Web Development',
-    'tools-comparison': 'Tools Comparison',
   };
 
   return (
@@ -38,7 +31,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[--primary]/10 text-[--primary]">
-              {categoryLabels[article.category] || article.category}
+              {CATEGORY_LABELS[article.category] || article.category}
             </span>
             <span className="text-xs text-[--text-muted]">
               {article.readTime} min read

@@ -7,3 +7,11 @@ export const CATEGORIES = [
 ] as const;
 
 export const ARTICLES_PER_PAGE = 9;
+
+export const CATEGORY_LABELS: Record<string, string> = {
+  'coding-assistants': 'Coding Assistants',
+  'ai-models': 'AI Models',
+  'devops': 'DevOps',
+  'web-development': 'Web Development',
+  'tools-comparison': 'Tools Comparison',
+};

@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Blog } from './pages/Blog.js';
+import { ArticleDetail } from './pages/ArticleDetail.js';
+import { NotFound } from './pages/NotFound.js';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/blog" element={<Blog />} />
         <Route path="/" element={
           <div className="min-h-screen flex items-center justify-center">
             <div className="text-center">
@@ -20,6 +21,10 @@ function App() {
             </div>
           </div>
         } />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<ArticleDetail />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
