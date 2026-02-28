@@ -15,3 +15,19 @@ export const CATEGORY_LABELS: Record<string, string> = {
   'web-development': 'Web Development',
   'tools-comparison': 'Tools Comparison',
 };
+
+export const SITE_CONFIG = {
+  name: 'AIToolPeak',
+  tagline: 'AI Tools Review & Comparison for Developers',
+  description: 'In-depth reviews, hands-on comparisons, and expert insights on the best AI tools for developers. Find the perfect AI coding assistant, model, and DevOps tool.',
+  url: 'https://aitoolpeak.setrox.com.tr',
+  author: {
+    name: 'AIToolPeak Team',
+    bio: 'Developers and AI enthusiasts who test AI tools hands-on to provide honest, practical reviews.',
+    image: '/author-avatar.jpg',
+  },
+  social: {
+    twitter: 'https://twitter.com/aitoolpeak',
+    github: 'https://github.com/aitoolpeak',
+  },
+} as const;
