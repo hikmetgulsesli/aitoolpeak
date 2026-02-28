@@ -1,158 +1,108 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useArticles } from '../hooks/useArticles.js';
-import { useCategories } from '../hooks/useCategories.js';
-import { ArticleCard } from '../components/article/ArticleCard.js';
-import { ArticleFilter } from '../components/article/ArticleFilter.js';
-import { Pagination } from '../components/ui/Pagination.js';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner.js';
-import { ARTICLES_PER_PAGE } from '../lib/constants.js';
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+
+interface Article {
+  title: string;
+  slug: string;
+  date: string;
+  category: string;
+  description: string;
+  author: string;
+  tags: string[];
+  readTime: number;
+  featured: boolean;
+}
 
 export function Blog() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get('category')
-  );
-  const [currentPage, setCurrentPage] = useState(() => {
-    const page = parseInt(searchParams.get('page') || '1', 10);
-    return isNaN(page) || page < 1 ? 1 : page;
-  });
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
-  const { articles, meta, loading, error } = useArticles({
-    category: selectedCategory || undefined,
-    page: currentPage,
-    limit: ARTICLES_PER_PAGE,
-  });
-
-  const { categories, loading: categoriesLoading } = useCategories();
-
-  // Update URL when filters change
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (selectedCategory) {
-      params.set('category', selectedCategory);
+    async function fetchArticles() {
+      try {
+        const response = await fetch(`/api/articles?page=${page}&limit=9`);
+        const data = await response.json();
+        setArticles(data.data || []);
+      } catch (error) {
+        console.error('Failed to fetch articles:', error);
+      } finally {
+        setLoading(false);
+      }
     }
-    if (currentPage > 1) {
-      params.set('page', currentPage.toString());
-    }
-    setSearchParams(params, { replace: true });
-  }, [selectedCategory, currentPage, setSearchParams]);
-
-  const handleCategoryChange = useCallback((category: string | null) => {
-    setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when changing category
-  }, []);
-
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-    // Scroll to top of article grid
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+    fetchArticles();
+  }, [page]);
 
   return (
-    <div className="min-h-screen bg-[--surface]">
-      {/* Header */}
-      <header className="bg-white border-b border-[--border]">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-[--text] mb-2">
-            Blog
-          </h1>
-          <p className="text-[--text-muted] max-w-2xl">
-            Discover the latest AI tools, reviews, and comparisons to help you choose the right tools for your development workflow.
-          </p>
-        </div>
-      </header>
+    <>
+      <Helmet>
+        <title>Blog - AIToolPeak</title>
+        <meta name="description" content="Read the latest AI tools reviews, comparisons, and guides for developers." />
+      </Helmet>
+      <div className="max-w-6xl mx-auto px-4 py-16 lg:py-24">
+        <h1 className="text-4xl font-bold mb-4">AI Tools Blog</h1>
+        <p className="text-lg text-[--text-muted] mb-12">
+          In-depth reviews and comparisons of AI tools for developers
+        </p>
 
-      <main className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Category Filter */}
-        <section className="mb-8">
-          {categoriesLoading ? (
-            <div className="h-10 flex items-center">
-              <LoadingSpinner size="sm" />
-            </div>
-          ) : (
-            <ArticleFilter
-              categories={categories}
-              selectedCategory={selectedCategory}
-              onCategoryChange={handleCategoryChange}
-            />
-          )}
-        </section>
-
-        {/* Results Count */}
-        {meta && (
-          <div className="mb-6 text-sm text-[--text-muted]">
-            Showing {articles.length} of {meta.total} articles
-            {selectedCategory && ` in ${categories.find(c => c.id === selectedCategory)?.name || selectedCategory}`}
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-[--text-muted]">Loading articles...</p>
           </div>
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="py-16">
-            <LoadingSpinner size="lg" />
+        ) : articles.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-[--text-muted]">No articles found.</p>
           </div>
-        )}
-
-        {/* Error State */}
-        {error && !loading && (
-          <div className="py-16 text-center">
-            <div className="text-red-600 mb-4">Failed to load articles</div>
-            <p className="text-[--text-muted] mb-4">{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-[--primary] text-white rounded-lg hover:bg-[--primary-hover] transition-colors cursor-pointer"
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && !error && articles.length === 0 && (
-          <div className="py-16 text-center">
-            <div className="text-6xl mb-4">📝</div>
-            <h3 className="text-xl font-semibold text-[--text] mb-2">
-              No articles found
-            </h3>
-            <p className="text-[--text-muted] mb-6">
-              {selectedCategory
-                ? 'No articles in this category yet. Check back soon!'
-                : 'No articles available yet. Check back soon!'}
-            </p>
-            {selectedCategory && (
-              <button
-                onClick={() => handleCategoryChange(null)}
-                className="px-4 py-2 bg-[--primary] text-white rounded-lg hover:bg-[--primary-hover] transition-colors cursor-pointer"
-              >
-                View All Articles
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Article Grid */}
-        {!loading && !error && articles.length > 0 && (
+        ) : (
           <>
-            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {articles.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
+                <a
+                  key={article.slug}
+                  href={`/blog/${article.slug}`}
+                  className="block p-6 border border-[--border] rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer"
+                >
+                  <span className="inline-block px-2 py-1 text-xs font-medium bg-[--primary] text-white rounded mb-3">
+                    {article.category}
+                  </span>
+                  <h2 className="text-xl font-semibold mb-2 line-clamp-2">
+                    {article.title}
+                  </h2>
+                  <p className="text-[--text-muted] text-sm mb-4 line-clamp-3">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-[--text-muted]">
+                    <span>{article.author}</span>
+                    <span>{article.readTime} min read</span>
+                  </div>
+                </a>
               ))}
-            </section>
-
-            {/* Pagination */}
-            {meta && meta.totalPages > 1 && (
-              <section className="py-8 border-t border-[--border]">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={meta.totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </section>
+            </div>
+            
+            {articles.length >= 9 && (
+              <div className="flex justify-center gap-2 mt-12">
+                <button
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-4 py-2 border border-[--border] rounded-lg hover:border-[--primary] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                >
+                  Previous
+                </button>
+                <span className="px-4 py-2 text-[--text-muted]">
+                  Page {page}
+                </span>
+                <button
+                  onClick={() => setPage(p => p + 1)}
+                  disabled={articles.length < 9}
+                  className="px-4 py-2 border border-[--border] rounded-lg hover:border-[--primary] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                >
+                  Next
+                </button>
+              </div>
             )}
           </>
         )}
-      </main>
-    </div>
+      </div>
+    </>
   );
 }
