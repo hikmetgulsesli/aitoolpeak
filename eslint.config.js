@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'dist-server', 'node_modules']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -18,6 +18,21 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ImportDeclaration[source.value=/^\\.\\.?\\/.*(?<!\\.(js|tsx|css|svg))$/]',
+          message: 'Relative imports must end with .js extension for Node.js ESM compatibility.',
+        },
+      ],
+    },
+  },
+  {
+    files: ['server/**/*.{ts,js}'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 ])
