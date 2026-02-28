@@ -23,3 +23,18 @@ KEY DECISIONS:
 - Used Lucide React for icons
 - All pages have SEO meta tags via react-helmet-async
 DEPENDENCIES ADDED: lucide-react (via --legacy-peer-deps)
+
+=== US-011: Categories Page ===
+COMPLETED: 2026-03-01T01:35:00+03:00
+FILES CHANGED: 
+- src/pages/Categories.tsx (new)
+- src/App.tsx (updated with /categories route)
+- src/hooks/useArticles.ts (fixed import)
+- src/hooks/useCategories.ts (fixed import)
+KEY DECISIONS: 
+- Created responsive category grid with 1/2/3 column layout
+- Used Lucide React icons for each category (Code2, Brain, Terminal, Globe, Scale)
+- Cards link to /blog?category={slug} for filtered blog view
+- Added hover effects with color transition and lift animation
+- Integrated with existing Layout and SEOHead components
+DEPENDENCIES ADDED: None
