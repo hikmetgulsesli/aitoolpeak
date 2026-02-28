@@ -33,8 +33,8 @@ app.use('/sitemap.xml', sitemapRouter);
 app.use('/assets', express.static(path.join(__dirname, '../dist/assets'), { maxAge: '1y' }));
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// SPA catch-all
-app.get('*', (req: Request, res: Response) => {
+// SPA catch-all - must be after API routes and static files
+app.get(/.*/, (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
