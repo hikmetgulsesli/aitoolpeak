@@ -1,24 +1,30 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { ArticleMeta, PaginatedResponse } from '../lib/types.js';
-import { fetchArticles } from '../lib/api.js';
+import type { ArticleMeta } from '../lib/types.js';
+import { getArticles } from '../lib/api.js';
 
 interface UseArticlesOptions {
   category?: string;
+  tag?: string;
   page?: number;
   limit?: number;
+  featured?: boolean;
 }
 
 interface UseArticlesReturn {
   articles: ArticleMeta[];
-  meta: PaginatedResponse<ArticleMeta>['meta'] | null;
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  } | null;
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
 }
 
 export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn {
   const [articles, setArticles] = useState<ArticleMeta[]>([]);
-  const [meta, setMeta] = useState<PaginatedResponse<ArticleMeta>['meta'] | null>(null);
+  const [meta, setMeta] = useState<UseArticlesReturn['meta']>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,11 +32,7 @@ export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn
     setLoading(true);
     setError(null);
     try {
-      const response = await fetchArticles({
-        category: options.category,
-        page: options.page,
-        limit: options.limit,
-      });
+      const response = await getArticles(options);
       setArticles(response.data);
       setMeta(response.meta);
     } catch (err) {
@@ -38,11 +40,11 @@ export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn
     } finally {
       setLoading(false);
     }
-  }, [options.category, options.page, options.limit]);
+  }, [options.category, options.tag, options.page, options.limit, options.featured]);
 
   useEffect(() => {
     refetch();
   }, [refetch]);
 
-  return { articles, meta, loading, error, refetch };
+  return { articles, meta, loading, error };
 }

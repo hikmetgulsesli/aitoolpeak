@@ -8,6 +8,7 @@ import { Contact } from './pages/Contact.js';
 import { Privacy } from './pages/Privacy.js';
 import { Terms } from './pages/Terms.js';
 import { Disclaimer } from './pages/Disclaimer.js';
+import { Categories } from './pages/Categories.js';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<ArticleDetail />} />
           <Route path="/404" element={<NotFound />} />

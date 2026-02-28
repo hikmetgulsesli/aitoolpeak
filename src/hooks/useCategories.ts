@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Category } from '../lib/types.js';
-import { fetchCategories } from '../lib/api.js';
+import { getCategories } from '../lib/api.js';
 
 interface UseCategoriesReturn {
   categories: Category[];
@@ -16,8 +16,8 @@ export function useCategories(): UseCategoriesReturn {
   useEffect(() => {
     async function loadCategories() {
       try {
-        const response = await fetchCategories();
-        setCategories(response.data);
+        const data = await getCategories();
+        setCategories(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch categories');
       } finally {
