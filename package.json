@@ -11,6 +11,9 @@
     "start": "tsx server/index.ts"
   },
   "dependencies": {
+    "@types/lunr": "^2.3.7",
+    "express-rate-limit": "^8.2.1",
+    "lunr": "^2.3.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
