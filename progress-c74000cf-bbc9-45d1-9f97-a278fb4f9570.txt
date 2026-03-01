@@ -54,3 +54,36 @@ KEY DECISIONS:
   - SEOHead automatically adds WebSite or Article schema
 DEPENDENCIES ADDED: None
 PR_URL: https://github.com/hikmetgulsesli/aitoolpeak/pull/17
+
+=== US-009: Blog Page ===
+COMPLETED: 2026-03-01T07:42:00+00:00
+FILES CHANGED: 
+  - src/pages/Blog.tsx (complete rewrite)
+KEY DECISIONS:
+  - Used useSearchParams for URL state management
+  - Category filter pills with toggle behavior (click again to clear)
+  - Full pagination with numbered page buttons
+  - Empty state with category-specific messaging
+  - Responsive grid: 1 col mobile, 2 cols tablet, 3 cols desktop
+  - Loading spinner and error retry states
+DEPENDENCIES ADDED: None
+PR_URL: https://github.com/hikmetgulsesli/aitoolpeak/pull/19
+
+=== US-012: Contact & Legal Pages ===
+COMPLETED: 2026-03-01T11:08:00+03:00
+FILES CHANGED: 
+  - src/pages/Contact.tsx (updated with Layout, SEOHead, Breadcrumbs, validation)
+  - src/pages/Privacy.tsx (updated with Layout, SEOHead, Breadcrumbs)
+  - src/pages/Terms.tsx (updated with Layout, SEOHead, Breadcrumbs)
+  - src/pages/Disclaimer.tsx (updated with Layout, SEOHead, Breadcrumbs)
+  - src/components/seo/JsonLd.tsx (added from us-006)
+  - src/components/seo/Breadcrumbs.tsx (added from us-006)
+  - src/components/seo/schema.ts (added from us-006)
+KEY DECISIONS: 
+  - Added Layout wrapper to all pages for consistent header/footer
+  - Added SEOHead for proper meta tags and Open Graph
+  - Added Breadcrumbs for SEO and navigation
+  - Contact form has client-side validation with field-level error messages
+  - Contact form handles API errors and shows success/error feedback
+DEPENDENCIES ADDED: None
+PR_URL: https://github.com/hikmetgulsesli/aitoolpeak/pull/22
