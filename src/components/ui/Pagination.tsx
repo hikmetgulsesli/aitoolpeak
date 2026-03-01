@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface PaginationProps {
+export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -47,30 +48,31 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
 
   if (totalPages <= 1) return null;
 
+  const baseButtonClasses = 'inline-flex items-center justify-center min-w-[40px] h-10 px-3 text-sm font-medium rounded-lg border transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)] active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+  const inactiveClasses = 'bg-[var(--bg)] text-[var(--text)] border-[var(--border)] hover:bg-[var(--surface)]';
+  const activeClasses = 'bg-[var(--primary)] text-white border-[var(--primary)] hover:bg-[var(--primary-hover)]';
+
   return (
     <nav aria-label="Pagination" className="flex items-center justify-center gap-2">
       <button
         onClick={handlePageClick(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-sm font-medium rounded-lg border border-[--border] bg-white text-[--text] hover:bg-[--surface] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+        className={`${baseButtonClasses} ${inactiveClasses}`}
         aria-label="Previous page"
       >
-        Previous
+        <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+        <span className="sr-only">Previous</span>
       </button>
 
       <div className="flex items-center gap-1">
         {getPageNumbers().map((page, index) => (
           page === '...' ? (
-            <span key={`ellipsis-${index}`} className="px-2 text-[--text-muted]">...</span>
+            <span key={`ellipsis-${index}`} className="px-2 text-[var(--text-muted)]">...</span>
           ) : (
             <button
               key={page}
               onClick={handlePageClick(page as number)}
-              className={`min-w-[40px] px-3 py-2 text-sm font-medium rounded-lg border transition-colors cursor-pointer ${
-                currentPage === page
-                  ? 'bg-[--primary] text-white border-[--primary]'
-                  : 'bg-white text-[--text] border-[--border] hover:bg-[--surface]'
-              }`}
+              className={`${baseButtonClasses} ${currentPage === page ? activeClasses : inactiveClasses}`}
               aria-label={`Page ${page}`}
               aria-current={currentPage === page ? 'page' : undefined}
             >
@@ -83,10 +85,11 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       <button
         onClick={handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-sm font-medium rounded-lg border border-[--border] bg-white text-[--text] hover:bg-[--surface] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+        className={`${baseButtonClasses} ${inactiveClasses}`}
         aria-label="Next page"
       >
-        Next
+        <ChevronRight className="w-4 h-4" aria-hidden="true" />
+        <span className="sr-only">Next</span>
       </button>
     </nav>
   );

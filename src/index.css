@@ -1,85 +1,68 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap');
+
 @theme {
-  /* Design Tokens - Colors */
   --color-bg: #ffffff;
-  --color-bg-dark: #030712;
-  --color-surface: #f9fafb;
-  --color-surface-dark: #111827;
-  
+  --color-foreground: #111827;
   --color-text: #111827;
-  --color-text-dark: #f3f4f6;
   --color-text-secondary: #4b5563;
-  --color-text-secondary-dark: #9ca3af;
-  
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
   --color-primary: #4f46e5;
   --color-primary-hover: #4338ca;
-  --color-primary-dark: #818cf8;
-  --color-primary-hover-dark: #a5b4fc;
-  
-  --color-border: #e5e7eb;
-  --color-border-dark: #1f2937;
-  
-  /* Design Tokens - Typography */
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  /* Design Tokens - Spacing */
-  --spacing-section: 6rem;
-  --spacing-section-lg: 8rem;
-  
-  /* Design Tokens - Radii */
-  --radius-card: 0.75rem;
-  --radius-button: 0.5rem;
-  
-  /* Design Tokens - Shadows */
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --color-accent: #f59e0b;
+  --color-surface: #f9fafb;
+  --color-surface-dark: #111827;
+  --color-code-bg: #f9fafb;
+  --color-code-text: #1f2937;
 }
 
-/* CSS Custom Properties for runtime theming */
 :root {
-  /* Typography */
   --font-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  /* Light Mode Colors (Default) */
+  --font-body: 'Work Sans', sans-serif;
+
   --bg: #ffffff;
-  --surface: #f9fafb;
+  --foreground: #111827;
   --text: #111827;
   --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
-  --border: #e5e7eb;
+  --accent: #f59e0b;
+  --surface: #f9fafb;
+  --surface-dark: #111827;
   --code-bg: #f9fafb;
   --code-text: #1f2937;
-  
-  /* Base styles */
+
   font-family: var(--font-body);
   line-height: 1.6;
   font-weight: 400;
   color-scheme: light;
-  color: var(--text);
+  color: var(--foreground);
   background-color: var(--bg);
-  
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark Mode */
+/* Dark mode via data attribute */
 [data-theme="dark"],
 .dark {
   --bg: #030712;
-  --surface: #111827;
+  --foreground: #f3f4f6;
   --text: #f3f4f6;
   --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: #1f2937;
   --primary: #818cf8;
   --primary-hover: #a5b4fc;
-  --border: #1f2937;
+  --accent: #fbbf24;
+  --surface: #111827;
+  --surface-dark: #030712;
   --code-bg: #111827;
   --code-text: #f3f4f6;
   color-scheme: dark;
@@ -89,20 +72,23 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #030712;
-    --surface: #111827;
+    --foreground: #f3f4f6;
     --text: #f3f4f6;
     --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border: #1f2937;
     --primary: #818cf8;
     --primary-hover: #a5b4fc;
-    --border: #1f2937;
+    --accent: #fbbf24;
+    --surface: #111827;
+    --surface-dark: #030712;
     --code-bg: #111827;
     --code-text: #f3f4f6;
     color-scheme: dark;
   }
 }
 
-/* Base Reset */
-a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span, div {
+* {
   box-sizing: border-box;
 }
 
@@ -111,7 +97,7 @@ body {
   min-height: 100vh;
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 a {
@@ -119,7 +105,6 @@ a {
   text-decoration: none;
 }
 
-/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
@@ -143,7 +128,7 @@ select:focus-visible {
 }
 
 /* Smooth transitions for theme changes */
-a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span, div {
+* {
   transition-property: background-color, border-color, color;
   transition-duration: 200ms;
   transition-timing-function: ease;
@@ -157,7 +142,7 @@ a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span,
 /* Prose styles for article content */
 .prose {
   max-width: 65ch;
-  color: var(--text);
+  color: var(--foreground);
   font-size: 1.125rem;
   line-height: 1.8;
 }
@@ -209,7 +194,6 @@ a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span,
 }
 
 .prose code {
-  font-family: var(--font-mono);
   background: var(--code-bg);
   color: var(--code-text);
   padding: 0.2em 0.4em;
@@ -263,4 +247,12 @@ a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span,
 .prose th {
   background: var(--surface);
   font-weight: 600;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
