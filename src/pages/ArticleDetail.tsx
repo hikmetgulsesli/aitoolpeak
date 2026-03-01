@@ -59,7 +59,7 @@ export function ArticleDetail() {
   return (
     <div className="min-h-screen bg-[--surface]">
       {/* Article Header */}
-      <header className="bg-white border-b border-[--border]">
+      <header className="bg-[--bg] border-b border-[--border]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumbs */}
           <nav className="text-sm text-[--text-muted] mb-6">

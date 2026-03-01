@@ -30,7 +30,7 @@ export function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-[--surface] via-white to-[--surface]">
+      <section className="py-16 lg:py-24 bg-[--surface]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-[--text]"
@@ -93,7 +93,7 @@ export function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 lg:py-20 bg-[--surface]">
+      <section className="py-16 lg:py-20 bg-[--bg]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2
@@ -115,7 +115,7 @@ export function HomePage() {
                 <Link
                   key={category.id}
                   to={`/blog?category=${category.slug}`}
-                  className="group flex items-center gap-4 p-5 bg-white rounded-xl border border-[--border] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+                  className="group flex items-center gap-4 p-5 bg-[--surface] rounded-xl border border-[--border] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                 >
                   <div className="flex-shrink-0 w-12 h-12 bg-[--primary]/10 rounded-lg flex items-center justify-center text-[--primary] group-hover:bg-[--primary] group-hover:text-white transition-colors">
                     {categoryIcons[category.id] || <Code2 className="w-6 h-6" />}

@@ -43,7 +43,7 @@ export function Categories() {
       />
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-[--surface] to-white">
+      <section className="py-16 lg:py-24 bg-[--surface]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1
@@ -99,7 +99,7 @@ export function Categories() {
                 <Link
                   key={category.id}
                   to={`/blog?category=${category.slug}`}
-                  className="group block p-8 bg-white rounded-xl border border-[--border] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+                  className="group block p-8 bg-[--surface] rounded-xl border border-[--border] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-16 h-16 bg-[--primary]/10 rounded-xl flex items-center justify-center text-[--primary] group-hover:bg-[--primary] group-hover:text-white transition-colors duration-200">

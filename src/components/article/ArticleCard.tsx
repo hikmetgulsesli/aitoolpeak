@@ -16,18 +16,8 @@ export function ArticleCard({ article }: ArticleCardProps) {
   };
 
   return (
-    <article className="group bg-white rounded-xl border border-[--border] overflow-hidden hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
+    <article className="group bg-[--bg] rounded-xl border border-[--border] overflow-hidden hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
       <a href={`/blog/${article.slug}`} className="block">
-        {article.ogImage && (
-          <div className="aspect-video overflow-hidden bg-[--surface]">
-            <img
-              src={article.ogImage}
-              alt={article.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-          </div>
-        )}
         <div className="p-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[--primary]/10 text-[--primary]">
