@@ -102,7 +102,7 @@
 }
 
 /* Base Reset */
-* {
+a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span, div {
   box-sizing: border-box;
 }
 
@@ -143,7 +143,7 @@ select:focus-visible {
 }
 
 /* Smooth transitions for theme changes */
-* {
+a, button, input, select, textarea, li, p, h1, h2, h3, h4, h5, h6, th, td, span, div {
   transition-property: background-color, border-color, color;
   transition-duration: 200ms;
   transition-timing-function: ease;
@@ -262,4 +262,5 @@ select:focus-visible {
 
 .prose th {
   background: var(--surface);
-  font-weight
+  font-weight: 600;
+}
