@@ -262,10 +262,4 @@ select:focus-visible {
 
 .prose th {
   background: var(--surface);
-  font-weight: 600;
-  color: var(--text);
-}
-
-.prose td {
-  color: var(--text-secondary);
-}
+  font-weight
