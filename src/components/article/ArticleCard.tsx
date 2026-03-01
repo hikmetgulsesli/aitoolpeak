@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ArticleMeta } from '../../lib/types.js';
 import { CATEGORY_LABELS } from '../../lib/constants.js';
 
@@ -11,9 +12,12 @@ const categoryGradients: Record<string, string> = {
 
 interface ArticleCardProps {
   article: ArticleMeta;
+  showAuthor?: boolean;
 }
 
-export function ArticleCard({ article }: ArticleCardProps) {
+export function ArticleCard({ article, showAuthor = true }: ArticleCardProps) {
+  const [imageError, setImageError] = useState(false);
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -24,21 +28,34 @@ export function ArticleCard({ article }: ArticleCardProps) {
   };
 
   const gradient = categoryGradients[article.category] || 'from-blue-600 to-violet-600';
+  const hasOgImage = article.ogImage && !imageError;
 
   return (
     <article className="group bg-[--bg] rounded-xl border border-[--border] overflow-hidden hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
       <a href={`/blog/${article.slug}`} className="block">
-        <div className={`aspect-[16/9] bg-gradient-to-br ${gradient} flex items-center justify-center p-6`}>
-          <span className="text-white/90 text-sm font-medium text-center line-clamp-2">
-            {article.title}
-          </span>
-        </div>
+        {hasOgImage ? (
+          <div className="aspect-[16/9] overflow-hidden bg-[--surface]">
+            <img
+              src={article.ogImage}
+              alt={article.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              onError={() => setImageError(true)}
+            />
+          </div>
+        ) : (
+          <div className={`aspect-[16/9] bg-gradient-to-br ${gradient} flex items-center justify-center p-6`}>
+            <span className="text-white/90 text-sm font-medium text-center line-clamp-2">
+              {article.title}
+            </span>
+          </div>
+        )}
         <div className="p-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[--primary]/10 text-[--primary]">
               {CATEGORY_LABELS[article.category] || article.category}
             </span>
-            <span className="text-xs text-[--text-muted]">
+            <span className="text-xs text-[--text-secondary]">
               {article.readTime} min read
             </span>
           </div>
@@ -47,14 +64,34 @@ export function ArticleCard({ article }: ArticleCardProps) {
             {article.title}
           </h3>
 
-          <p className="text-sm text-[--text-muted] line-clamp-2 mb-4">
+          <p className="text-sm text-[--text-secondary] line-clamp-2 mb-4">
             {article.description}
           </p>
 
-          <div className="flex items-center justify-between text-xs text-[--text-muted]">
-            <span>{article.author}</span>
-            <span>{formatDate(article.date)}</span>
-          </div>
+          {showAuthor && (
+            <div className="flex items-center gap-2">
+              {article.authorImage ? (
+                <img
+                  src={article.authorImage}
+                  alt={article.author}
+                  className="w-6 h-6 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-[--primary]/10 flex items-center justify-center">
+                  <span className="text-xs font-medium text-[--primary]">
+                    {article.author.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+              <span className="text-xs text-[--text-secondary] truncate">
+                {article.author}
+              </span>
+              <span className="text-xs text-[--text-secondary]">•</span>
+              <span className="text-xs text-[--text-secondary]">
+                {formatDate(article.date)}
+              </span>
+            </div>
+          )}
         </div>
       </a>
     </article>

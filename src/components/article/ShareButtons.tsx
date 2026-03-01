@@ -7,6 +7,7 @@ interface ShareButtonsProps {
 
 export function ShareButtons({ title, url }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const shareLinks = [
     {
@@ -42,23 +43,37 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setShowTooltip(true);
+      setTimeout(() => {
+        setCopied(false);
+        setShowTooltip(false);
+      }, 2000);
     } catch {
       // Fallback for browsers that don't support clipboard API
       const textArea = document.createElement('textarea');
       textArea.value = url;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
       document.body.appendChild(textArea);
       textArea.select();
-      document.execCommand('copy');
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        setShowTooltip(true);
+        setTimeout(() => {
+          setCopied(false);
+          setShowTooltip(false);
+        }, 2000);
+      } catch {
+        // Ignore fallback errors
+      }
       document.body.removeChild(textArea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     }
   };
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-[--text-muted]">Share:</span>
+      <span className="text-sm text-[--text-secondary]">Share:</span>
       <div className="flex items-center gap-2">
         {shareLinks.map((link) => (
           <a
@@ -66,26 +81,32 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-[--surface] flex items-center justify-center text-[--text-muted] hover:bg-[--primary] hover:text-white transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-full bg-[--surface] flex items-center justify-center text-[--text-secondary] hover:bg-[--primary] hover:text-white transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[--primary] focus-visible:ring-offset-2"
             aria-label={`Share on ${link.name}`}
           >
             {link.icon}
           </a>
         ))}
-        <button
-          onClick={handleCopyLink}
-          className="w-9 h-9 rounded-full bg-[--surface] flex items-center justify-center text-[--text-muted] hover:bg-[--primary] hover:text-white transition-colors cursor-pointer"
-          aria-label="Copy link"
-          title={copied ? 'Copied!' : 'Copy link'}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-        </button>
+        <div className="relative">
+          <button
+            onClick={handleCopyLink}
+            className="w-9 h-9 rounded-full bg-[--surface] flex items-center justify-center text-[--text-secondary] hover:bg-[--primary] hover:text-white transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[--primary] focus-visible:ring-offset-2"
+            aria-label="Copy link"
+            title="Copy link"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a-2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
+          
+          {showTooltip && (
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[--text] text-white text-xs rounded whitespace-nowrap animate-fade-in">
+              {copied ? 'Copied!' : 'Copy failed'}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[--text]" />
+            </div>
+          )}
+        </div>
       </div>
-      {copied && (
-        <span className="text-sm text-green-600">Copied!</span>
-      )}
     </div>
   );
 }

@@ -14,7 +14,7 @@ export function ArticleFilter({ categories, selectedCategory, onCategoryChange }
         className={`px-4 py-2 text-sm font-medium rounded-full border transition-colors cursor-pointer ${
           selectedCategory === null
             ? 'bg-[--primary] text-white border-[--primary]'
-            : 'bg-white text-[--text] border-[--border] hover:bg-[--surface]'
+            : 'bg-[--bg] text-[--text] border-[--border] hover:bg-[--surface]'
         }`}
       >
         All
@@ -27,7 +27,7 @@ export function ArticleFilter({ categories, selectedCategory, onCategoryChange }
           className={`px-4 py-2 text-sm font-medium rounded-full border transition-colors cursor-pointer ${
             selectedCategory === category.id
               ? 'bg-[--primary] text-white border-[--primary]'
-              : 'bg-white text-[--text] border-[--border] hover:bg-[--surface]'
+              : 'bg-[--bg] text-[--text] border-[--border] hover:bg-[--surface]'
           }`}
         >
           {category.name}
