@@ -1,3 +1,4 @@
+// Article types
 export interface ArticleMeta {
   title: string;
   slug: string;
@@ -8,7 +9,7 @@ export interface ArticleMeta {
   author: string;
   authorImage?: string;
   tags: string[];
-  readTime: number;
+  readTime: string;
   featured?: boolean;
   ogImage?: string;
 }
@@ -17,7 +18,7 @@ export interface Article extends ArticleMeta {
   content: string;
   html: string;
   headings: Heading[];
-  relatedArticles?: ArticleMeta[];
+  relatedArticles: ArticleMeta[];
 }
 
 export interface Heading {
@@ -26,12 +27,22 @@ export interface Heading {
   level: number;
 }
 
+// Category types
 export interface Category {
   id: string;
   name: string;
-  description: string;
   slug: string;
+  description: string;
   articleCount: number;
+}
+
+// API Response types
+export interface ApiResponse<T> {
+  data?: T;
+  error?: {
+    code: string;
+    message: string;
+  };
 }
 
 export interface PaginatedResponse<T> {
@@ -44,25 +55,28 @@ export interface PaginatedResponse<T> {
   };
 }
 
-export interface ContactSubmission {
-  id: string;
+export interface ArticlesListResponse {
+  articles: ArticleMeta[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface SearchResponse {
+  results: ArticleMeta[];
+  query: string;
+}
+
+// Contact form
+export interface ContactForm {
   name: string;
   email: string;
   subject: string;
   message: string;
-  submittedAt: string;
 }
 
-export interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-export interface ContactFormErrors {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-}
+// Alias for API compatibility
+export type ContactFormData = ContactForm;
