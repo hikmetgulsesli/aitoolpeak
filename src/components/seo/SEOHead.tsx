@@ -1,5 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import { SITE_CONFIG } from '../../lib/constants.js';
+import { createWebSiteSchema, createArticleSchema } from './schema.js';
+
+interface ArticleData {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  author: string;
+  publishedTime: string;
+  modifiedTime?: string;
+}
 
 interface SEOHeadProps {
   title?: string;
@@ -8,6 +19,7 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
+  article?: ArticleData;
 }
 
 export function SEOHead({
@@ -17,6 +29,7 @@ export function SEOHead({
   ogImage,
   ogType = 'website',
   noindex = false,
+  article,
 }: SEOHeadProps) {
   const fullTitle = title ? `${title} | ${SITE_CONFIG.name}` : SITE_CONFIG.name;
   const metaDescription = description || SITE_CONFIG.description;
@@ -45,6 +58,17 @@ export function SEOHead({
 
       {/* Robots */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+      {/* JSON-LD Structured Data */}
+      {article ? (
+        <script type="application/ld+json">
+          {JSON.stringify(createArticleSchema(article))}
+        </script>
+      ) : (
+        <script type="application/ld+json">
+          {JSON.stringify(createWebSiteSchema())}
+        </script>
+      )}
     </Helmet>
   );
 }
