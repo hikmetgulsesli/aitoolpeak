@@ -9,7 +9,7 @@ export interface ArticleMeta {
   author: string;
   authorImage?: string;
   tags: string[];
-  readTime: string;
+  readTime: number;
   featured?: boolean;
   ogImage?: string;
 }
@@ -18,7 +18,7 @@ export interface Article extends ArticleMeta {
   content: string;
   html: string;
   headings: Heading[];
-  relatedArticles: ArticleMeta[];
+  relatedArticles?: ArticleMeta[];
 }
 
 export interface Heading {
