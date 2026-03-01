@@ -1,63 +1,107 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @theme {
+  /* Design Tokens - Colors */
   --color-bg: #ffffff;
-  --color-foreground: #1a1a1a;
-  --color-text: #1a1a1a;
-  --color-text-muted: #6b7280;
+  --color-bg-dark: #030712;
+  --color-surface: #f9fafb;
+  --color-surface-dark: #111827;
+  
+  --color-text: #111827;
+  --color-text-dark: #f3f4f6;
+  --color-text-secondary: #4b5563;
+  --color-text-secondary-dark: #9ca3af;
+  
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-dark: #818cf8;
+  --color-primary-hover-dark: #a5b4fc;
+  
   --color-border: #e5e7eb;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #3b82f6;
-  --color-surface: #f8fafc;
-  --color-surface-dark: #0f172a;
+  --color-border-dark: #1f2937;
+  
+  /* Design Tokens - Typography */
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Design Tokens - Spacing */
+  --spacing-section: 6rem;
+  --spacing-section-lg: 8rem;
+  
+  /* Design Tokens - Radii */
+  --radius-card: 0.75rem;
+  --radius-button: 0.5rem;
+  
+  /* Design Tokens - Shadows */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+/* CSS Custom Properties for runtime theming */
 :root {
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
-
+  /* Typography */
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Light Mode Colors (Default) */
   --bg: #ffffff;
-  --foreground: #1a1a1a;
-  --text: #1a1a1a;
-  --text-muted: #6b7280;
+  --surface: #f9fafb;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
   --border: #e5e7eb;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --accent: #3b82f6;
-  --surface: #f8fafc;
-  --surface-dark: #0f172a;
-
+  --code-bg: #f9fafb;
+  --code-text: #1f2937;
+  
+  /* Base styles */
   font-family: var(--font-body);
   line-height: 1.6;
   font-weight: 400;
   color-scheme: light;
-  color: var(--foreground);
+  color: var(--text);
   background-color: var(--bg);
-
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark Mode */
+[data-theme="dark"],
+.dark {
+  --bg: #030712;
+  --surface: #111827;
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --border: #1f2937;
+  --code-bg: #111827;
+  --code-text: #f3f4f6;
+  color-scheme: dark;
+}
+
+/* System preference fallback */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f172a;
-    --foreground: #f1f5f9;
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
-    --border: #1e293b;
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
-    --accent: #60a5fa;
-    --surface: #1e293b;
-    --surface-dark: #0f172a;
+  :root:not([data-theme="light"]) {
+    --bg: #030712;
+    --surface: #111827;
+    --text: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --border: #1f2937;
+    --code-bg: #111827;
+    --code-text: #f3f4f6;
+    color-scheme: dark;
   }
 }
 
+/* Base Reset */
 * {
   box-sizing: border-box;
 }
@@ -65,6 +109,9 @@
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 a {
@@ -72,34 +119,68 @@ a {
   text-decoration: none;
 }
 
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
   font-weight: 700;
+  color: var(--text);
 }
 
 button {
   font-family: inherit;
+  cursor: pointer;
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions for performance on page load */
+.no-transitions * {
+  transition: none !important;
 }
 
 /* Prose styles for article content */
 .prose {
   max-width: 65ch;
-  color: var(--foreground);
+  color: var(--text);
+  font-size: 1.125rem;
+  line-height: 1.8;
 }
 
 .prose h2 {
+  font-family: var(--font-heading);
   margin-top: 2em;
   margin-bottom: 0.75em;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .prose h3 {
+  font-family: var(--font-heading);
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  font-size: 1.375rem;
+  font-weight: 600;
 }
 
 .prose p {
   margin-bottom: 1.25em;
+  color: var(--text-secondary);
 }
 
 .prose ul, .prose ol {
@@ -109,36 +190,47 @@ button {
 
 .prose li {
   margin-bottom: 0.5em;
+  color: var(--text-secondary);
 }
 
 .prose a {
   color: var(--primary);
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--primary-hover);
 }
 
 .prose strong {
   font-weight: 600;
+  color: var(--text);
 }
 
 .prose code {
-  background: var(--border);
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.875em;
 }
 
 .prose pre {
-  background: #1e293b;
-  color: #f1f5f9;
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 1em;
   border-radius: 8px;
   overflow-x: auto;
   margin-bottom: 1.5em;
+  border: 1px solid var(--border);
 }
 
 .prose pre code {
   background: transparent;
   padding: 0;
+  border-radius: 0;
 }
 
 .prose blockquote {
@@ -146,7 +238,7 @@ button {
   padding-left: 1em;
   margin-left: 0;
   font-style: italic;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .prose img {
@@ -169,6 +261,11 @@ button {
 }
 
 .prose th {
-  background: var(--border);
+  background: var(--surface);
   font-weight: 600;
+  color: var(--text);
+}
+
+.prose td {
+  color: var(--text-secondary);
 }
