@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, HTMLAttributes, AnchorHTMLAttributes } from 'react';
 
 export type BadgeVariant = 
   | 'default'
@@ -12,13 +12,26 @@ export type BadgeVariant =
   | 'error'
   | 'info';
 
-export interface BadgeProps {
+// Base props for the badge
+interface BadgeBaseProps {
   children: ReactNode;
   variant?: BadgeVariant;
   className?: string;
-  as?: 'span' | 'a';
-  href?: string;
 }
+
+// Props for when the badge is a span
+interface BadgeSpanProps extends BadgeBaseProps, Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
+  as?: 'span';
+  href?: never;
+}
+
+// Props for when the badge is an anchor
+interface BadgeAnchorProps extends BadgeBaseProps, Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children'> {
+  as: 'a';
+  href: string;
+}
+
+export type BadgeProps = BadgeSpanProps | BadgeAnchorProps;
 
 const variantStyles: Record<BadgeVariant, string> = {
   default: 'bg-[var(--surface)] text-[var(--text)] border-[var(--border)]',
@@ -33,27 +46,30 @@ const variantStyles: Record<BadgeVariant, string> = {
   info: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950 dark:text-sky-300 dark:border-sky-800',
 };
 
-export function Badge({ 
-  children, 
-  variant = 'default', 
-  className = '',
-  as: Component = 'span',
-  href,
-}: BadgeProps) {
+export function Badge(props: BadgeProps) {
+  const { 
+    children, 
+    variant = 'default', 
+    className = '',
+    as,
+    href,
+    ...restProps
+  } = props;
+  
   const baseClasses = 'inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full border transition-colors duration-200';
   const variantClasses = variantStyles[variant];
   const combinedClasses = `${baseClasses} ${variantClasses} ${className}`;
 
-  if (Component === 'a' && href) {
+  if (as === 'a' && href) {
     return (
-      <a href={href} className={combinedClasses}>
+      <a href={href.startsWith('javascript:') ? '#' : href} className={combinedClasses} {...restProps as AnchorHTMLAttributes<HTMLAnchorElement>}>
         {children}
       </a>
     );
   }
 
   return (
-    <span className={combinedClasses}>
+    <span className={combinedClasses} {...restProps as HTMLAttributes<HTMLSpanElement>}>
       {children}
     </span>
   );

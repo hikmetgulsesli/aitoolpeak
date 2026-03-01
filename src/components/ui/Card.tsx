@@ -28,7 +28,7 @@ export function Card({
   as = 'div',
   ...props 
 }: CardProps) {
-  const baseClasses = 'bg-[var(--bg)] border border-[var(--border)] rounded-xl overflow-hidden';
+  const baseClasses = 'group bg-[var(--bg)] border border-[var(--border)] rounded-xl overflow-hidden';
   const hoverClasses = hover 
     ? 'transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md cursor-pointer' 
     : '';
@@ -37,7 +37,7 @@ export function Card({
   if (as === 'a') {
     const { href, ...anchorProps } = props as CardAnchorProps;
     return (
-      <a href={href} className={combinedClasses} {...anchorProps}>
+      <a href={href.startsWith('javascript:') ? '#' : href} className={combinedClasses} {...anchorProps}>
         {children}
       </a>
     );

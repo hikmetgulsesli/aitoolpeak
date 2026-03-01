@@ -88,7 +88,7 @@
   }
 }
 
-* {
+a, button, input, textarea, select, span, div {
   box-sizing: border-box;
 }
 
@@ -128,7 +128,7 @@ select:focus-visible {
 }
 
 /* Smooth transitions for theme changes */
-* {
+a, button, input, textarea, select, span, div {
   transition-property: background-color, border-color, color;
   transition-duration: 200ms;
   transition-timing-function: ease;
