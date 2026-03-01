@@ -22,6 +22,11 @@ interface SEOHeadProps {
   article?: ArticleData;
 }
 
+// Escape </script> to prevent XSS
+function escapeJsonLd(json: string): string {
+  return json.replace(/<\/script>/gi, '<\\/script>');
+}
+
 export function SEOHead({
   title,
   description,
@@ -35,6 +40,10 @@ export function SEOHead({
   const metaDescription = description || SITE_CONFIG.description;
   const canonicalUrl = canonical ? `${SITE_CONFIG.url}${canonical}` : SITE_CONFIG.url;
   const imageUrl = ogImage || `${SITE_CONFIG.url}/og-image.jpg`;
+
+  const schemaJson = article 
+    ? escapeJsonLd(JSON.stringify(createArticleSchema(article)))
+    : escapeJsonLd(JSON.stringify(createWebSiteSchema()));
 
   return (
     <Helmet>
@@ -60,15 +69,9 @@ export function SEOHead({
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       {/* JSON-LD Structured Data */}
-      {article ? (
-        <script type="application/ld+json">
-          {JSON.stringify(createArticleSchema(article))}
-        </script>
-      ) : (
-        <script type="application/ld+json">
-          {JSON.stringify(createWebSiteSchema())}
-        </script>
-      )}
+      <script type="application/ld+json">
+        {schemaJson}
+      </script>
     </Helmet>
   );
 }

@@ -4,11 +4,17 @@ interface JsonLdProps {
   data: Record<string, unknown>;
 }
 
+// Escape </script> to prevent XSS
+function escapeJsonLd(json: string): string {
+  return json.replace(/<\/script>/gi, '<\\/script>');
+}
+
 export function JsonLd({ data }: JsonLdProps) {
+  const jsonString = escapeJsonLd(JSON.stringify(data));
   return (
     <Helmet>
       <script type="application/ld+json">
-        {JSON.stringify(data)}
+        {jsonString}
       </script>
     </Helmet>
   );

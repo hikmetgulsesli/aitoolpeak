@@ -1,15 +1,17 @@
+import { SITE_CONFIG } from '../../lib/constants.js';
+
 // WebSite Schema
 export function createWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'AIToolPeak',
-    url: 'https://aitoolpeak.setrox.com.tr',
+    name: SITE_CONFIG.name,
+    url: SITE_CONFIG.url,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://aitoolpeak.setrox.com.tr/search?q={search_term_string}'
+        urlTemplate: `${SITE_CONFIG.url}/search?q={search_term_string}`
       },
       'query-input': 'required name=search_term_string'
     }
@@ -39,10 +41,10 @@ export function createArticleSchema(article: {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'AIToolPeak',
+      name: SITE_CONFIG.name,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://aitoolpeak.setrox.com.tr/logo.png'
+        url: `${SITE_CONFIG.url}/logo.png`
       }
     },
     datePublished: article.publishedTime,

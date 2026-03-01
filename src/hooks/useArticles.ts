@@ -28,6 +28,8 @@ export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { category, tag, page, limit, featured } = options;
+
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -40,7 +42,7 @@ export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn
     } finally {
       setLoading(false);
     }
-  }, [options]);
+  }, [category, tag, page, limit, featured]);
 
   useEffect(() => {
     refetch();
