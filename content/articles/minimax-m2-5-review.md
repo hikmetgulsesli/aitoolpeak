@@ -6,11 +6,9 @@ updated: "2026-02-09"
 category: "ai-models"
 description: "An in-depth review of MiniMax M2.5, the affordable Chinese AI model for coding."
 author: "Lisa Wang"
-authorImage: "/images/authors/lisa-wang.jpg"
 tags: ["minimax", "ai models", "budget", "coding", "chinese ai"]
 readTime: 9
 featured: false
-ogImage: "/images/articles/minimax-m2-5-og.jpg"
 ---
 
 # MiniMax M2.5: A Deep Dive into the Affordable AI Model

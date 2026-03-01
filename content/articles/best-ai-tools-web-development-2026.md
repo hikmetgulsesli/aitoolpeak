@@ -6,11 +6,9 @@ updated: "2026-02-08"
 category: "web-development"
 description: "A comprehensive guide to the best AI tools for web developers in 2026."
 author: "James Wilson"
-authorImage: "/images/authors/james-wilson.jpg"
 tags: ["ai tools", "web development", "frontend", "backend", "javascript"]
 readTime: 12
 featured: false
-ogImage: "/images/articles/ai-web-dev-og.jpg"
 ---
 
 # Best AI Tools for Web Development: 2026 Edition

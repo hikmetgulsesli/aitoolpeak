@@ -6,11 +6,9 @@ updated: "2026-02-15"
 category: "coding-assistants"
 description: "An in-depth comparison of the top AI coding assistants in 2026, including Claude Code, Cursor, GitHub Copilot, and more. Find the perfect tool for your workflow."
 author: "Alex Chen"
-authorImage: "/images/authors/alex-chen.jpg"
 tags: ["ai coding", "claude code", "cursor", "github copilot", "developer tools"]
 readTime: 12
 featured: true
-ogImage: "/images/articles/ai-coding-assistants-og.jpg"
 ---
 
 # Best AI Coding Assistants in 2026: Complete Comparison

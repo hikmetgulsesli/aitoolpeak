@@ -39,7 +39,7 @@ export function SEOHead({
   const fullTitle = title ? `${title} | ${SITE_CONFIG.name}` : SITE_CONFIG.name;
   const metaDescription = description || SITE_CONFIG.description;
   const canonicalUrl = canonical ? `${SITE_CONFIG.url}${canonical}` : SITE_CONFIG.url;
-  const imageUrl = ogImage || `${SITE_CONFIG.url}/og-image.jpg`;
+  const imageUrl = ogImage ? `${SITE_CONFIG.url}${ogImage}` : undefined;
 
   const schemaJson = article 
     ? escapeJsonLd(JSON.stringify(createArticleSchema(article)))
@@ -56,14 +56,14 @@ export function SEOHead({
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:image" content={imageUrl} />
+      {imageUrl && <meta property="og:image" content={imageUrl} />}
       <meta property="og:site_name" content={SITE_CONFIG.name} />
 
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta name="twitter:image" content={imageUrl} />
+      {imageUrl && <meta name="twitter:image" content={imageUrl} />}
 
       {/* Robots */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}

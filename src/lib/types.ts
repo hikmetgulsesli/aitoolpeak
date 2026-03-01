@@ -7,11 +7,9 @@ export interface ArticleMeta {
   category: string;
   description: string;
   author: string;
-  authorImage?: string;
   tags: string[];
   readTime: number;
   featured?: boolean;
-  ogImage?: string;
 }
 
 export interface Article extends ArticleMeta {

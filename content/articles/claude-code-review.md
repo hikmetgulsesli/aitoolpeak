@@ -6,11 +6,9 @@ updated: "2026-02-14"
 category: "coding-assistants"
 description: "A deep dive into Claude Code, Anthropic's terminal-based AI coding assistant. Learn how it works, when to use it, and why it might replace your IDE plugins."
 author: "Alex Chen"
-authorImage: "/images/authors/alex-chen.jpg"
 tags: ["claude code", "anthropic", "terminal", "cli", "ai coding"]
 readTime: 10
 featured: true
-ogImage: "/images/articles/claude-code-review-og.jpg"
 ---
 
 # Claude Code Review: The CLI Tool That Changed My Workflow

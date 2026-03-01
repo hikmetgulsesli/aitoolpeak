@@ -6,11 +6,9 @@ updated: "2026-02-06"
 category: "tools-comparison"
 description: "A detailed comparison of Aider, Cursor, and Claude Code for terminal-based AI coding."
 author: "Alex Chen"
-authorImage: "/images/authors/alex-chen.jpg"
 tags: ["aider", "cursor", "claude code", "terminal", "ai coding"]
 readTime: 11
 featured: false
-ogImage: "/images/articles/aider-vs-cursor-og.jpg"
 ---
 
 # Aider vs Cursor vs Claude Code: Terminal AI Showdown

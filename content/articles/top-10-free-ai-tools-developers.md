@@ -6,11 +6,9 @@ updated: "2026-02-12"
 category: "tools-comparison"
 description: "Discover the best free AI tools for developers in 2026."
 author: "Sarah Miller"
-authorImage: "/images/authors/sarah-miller.jpg"
 tags: ["free tools", "ai tools", "developer tools", "productivity"]
 readTime: 9
 featured: false
-ogImage: "/images/articles/free-ai-tools-og.jpg"
 ---
 
 # Top 10 Free AI Tools Every Developer Should Know

@@ -6,11 +6,9 @@ updated: "2026-02-04"
 category: "ai-models"
 description: "A step-by-step guide to setting up Ollama for running AI models locally on your machine."
 author: "Tom Richards"
-authorImage: "/images/authors/tom-richards.jpg"
 tags: ["ollama", "local ai", "llm", "privacy", "self-hosted"]
 readTime: 10
 featured: false
-ogImage: "/images/articles/ollama-setup-og.jpg"
 ---
 
 # Setting Up Ollama for Local AI: A Complete Guide

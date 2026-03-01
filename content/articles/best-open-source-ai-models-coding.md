@@ -6,11 +6,9 @@ updated: "2026-02-03"
 category: "ai-models"
 description: "A comprehensive guide to the best open source AI models for coding in 2026."
 author: "Rachel Green"
-authorImage: "/images/authors/rachel-green.jpg"
 tags: ["open source", "ai models", "llm", "coding", "self-hosted"]
 readTime: 11
 featured: false
-ogImage: "/images/articles/open-source-models-og.jpg"
 ---
 
 # Best Open Source AI Models for Coding in 2026

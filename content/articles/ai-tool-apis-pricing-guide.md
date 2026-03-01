@@ -6,11 +6,9 @@ updated: "2026-02-01"
 category: "tools-comparison"
 description: "A comprehensive comparison of AI tool API pricing from all major providers."
 author: "Elif Demir"
-authorImage: "/images/authors/elif-demir.jpg"
 tags: ["api", "pricing", "ai tools", "openai", "anthropic", "google"]
 readTime: 10
 featured: false
-ogImage: "/images/articles/ai-apis-pricing-og.jpg"
 ---
 
 # The Complete Guide to AI Tool APIs: Pricing Compared

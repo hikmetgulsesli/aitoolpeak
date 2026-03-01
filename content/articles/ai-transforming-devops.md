@@ -6,11 +6,9 @@ updated: "2026-02-05"
 category: "devops"
 description: "How artificial intelligence is revolutionizing DevOps practices, from CI/CD to infrastructure management."
 author: "Marcus Johnson"
-authorImage: "/images/authors/marcus-johnson.jpg"
 tags: ["devops", "ai", "ci/cd", "infrastructure", "automation"]
 readTime: 12
 featured: false
-ogImage: "/images/articles/ai-devops-og.jpg"
 ---
 
 # How AI Is Transforming DevOps: Tools and Workflows

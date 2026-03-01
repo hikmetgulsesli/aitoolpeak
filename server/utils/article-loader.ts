@@ -104,11 +104,9 @@ export async function loadArticles(): Promise<void> {
         category: data.category,
         description: data.description,
         author: data.author,
-        authorImage: data.authorImage,
         tags: data.tags || [],
         readTime: data.readTime || estimateReadTime(markdownContent),
         featured: data.featured || false,
-        ogImage: data.ogImage,
         content: markdownContent,
         html,
         headings
@@ -123,11 +121,9 @@ export async function loadArticles(): Promise<void> {
         category: article.category,
         description: article.description,
         author: article.author,
-        authorImage: article.authorImage,
         tags: article.tags,
         readTime: article.readTime,
         featured: article.featured,
-        ogImage: article.ogImage
       });
     }
 
@@ -141,7 +137,7 @@ export async function loadArticles(): Promise<void> {
     
     // Build search index for performant searches
     buildSearchIndex();
-  } catch {
+  } catch (error) {
     console.error('Error loading articles:', error);
     // Create articles directory if it doesn't exist
     await fs.mkdir(ARTICLES_DIR, { recursive: true });

@@ -34,7 +34,7 @@ export function createArticleSchema(article: {
     headline: article.title,
     description: article.description,
     url: article.url,
-    image: article.image,
+    ...(article.image ? { image: article.image } : {}),
     author: {
       '@type': 'Person',
       name: article.author
@@ -42,10 +42,6 @@ export function createArticleSchema(article: {
     publisher: {
       '@type': 'Organization',
       name: SITE_CONFIG.name,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_CONFIG.url}/logo.png`
-      }
     },
     datePublished: article.publishedTime,
     dateModified: article.modifiedTime || article.publishedTime,

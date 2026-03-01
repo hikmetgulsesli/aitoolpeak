@@ -24,7 +24,6 @@ export const SITE_CONFIG = {
   author: {
     name: 'AIToolPeak Team',
     bio: 'Developers and AI enthusiasts who test AI tools hands-on to provide honest, practical reviews.',
-    image: '/author-avatar.jpg',
   },
   social: {
     twitter: 'https://twitter.com/aitoolpeak',

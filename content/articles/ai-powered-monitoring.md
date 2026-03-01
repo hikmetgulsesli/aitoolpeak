@@ -6,11 +6,9 @@ updated: "2026-02-02"
 category: "devops"
 description: "How AI-powered monitoring tools can help you detect issues before they affect users."
 author: "Onur Yilmaz"
-authorImage: "/images/authors/onur-yilmaz.jpg"
 tags: ["monitoring", "ai", "observability", "devops", "infrastructure"]
 readTime: 9
 featured: false
-ogImage: "/images/articles/ai-monitoring-og.jpg"
 ---
 
 # AI-Powered Monitoring: Tools to Watch Your Infrastructure

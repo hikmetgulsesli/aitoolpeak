@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Layout } from '../components/layout/Layout.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -42,32 +43,39 @@ export function Contact() {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Contact - AIToolPeak</title>
-        <meta name="description" content="Contact AIToolPeak - We'd love to hear from you about AI tools reviews, partnerships, or general inquiries." />
-      </Helmet>
+    <Layout>
+      <SEOHead
+        title="Contact"
+        description="Contact AIToolPeak - We'd love to hear from you about AI tools reviews, partnerships, or general inquiries."
+        canonical="/contact"
+      />
+
       <div className="max-w-2xl mx-auto px-4 py-16 lg:py-24">
-        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+        <h1
+          className="text-4xl font-bold mb-4 text-[--text]"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          Contact Us
+        </h1>
         <p className="text-lg text-[--text-muted] mb-8">
           Have questions about our reviews or want to suggest a tool for review? We'd love to hear from you.
         </p>
 
         {status === 'success' && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-            <p className="text-green-800 font-medium">Thank you for your message! We'll get back to you soon.</p>
+          <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 mb-6">
+            <p className="text-green-600 dark:text-green-400 font-medium">Thank you for your message! We'll get back to you soon.</p>
           </div>
         )}
 
         {status === 'error' && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-800 font-medium">Something went wrong. Please try again or email us directly.</p>
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-6">
+            <p className="text-red-600 dark:text-red-400 font-medium">Something went wrong. Please try again or email us directly.</p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-[--text] mb-2">
               Name *
             </label>
             <input
@@ -77,13 +85,13 @@ export function Contact() {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] text-[--text] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
               placeholder="Your name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-[--text] mb-2">
               Email *
             </label>
             <input
@@ -93,13 +101,13 @@ export function Contact() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] text-[--text] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label htmlFor="subject" className="block text-sm font-medium mb-2">
+            <label htmlFor="subject" className="block text-sm font-medium text-[--text] mb-2">
               Subject *
             </label>
             <select
@@ -108,7 +116,7 @@ export function Contact() {
               required
               value={formData.subject}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] text-[--text] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent"
             >
               <option value="">Select a subject</option>
               <option value="review-request">Request a Tool Review</option>
@@ -120,7 +128,7 @@ export function Contact() {
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-2">
+            <label htmlFor="message" className="block text-sm font-medium text-[--text] mb-2">
               Message *
             </label>
             <textarea
@@ -130,7 +138,7 @@ export function Contact() {
               rows={6}
               value={formData.message}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent resize-none"
+              className="w-full px-4 py-3 rounded-lg border border-[--border] bg-[--bg] text-[--text] focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent resize-none"
               placeholder="Tell us what's on your mind..."
             />
           </div>
@@ -144,6 +152,6 @@ export function Contact() {
           </button>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }

@@ -22,7 +22,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   };
 
   return (
-    <nav className="bg-white rounded-xl border border-[--border] p-6 sticky top-24">
+    <nav className="bg-[--bg] rounded-xl border border-[--border] p-6 sticky top-24">
       <h3 className="text-sm font-semibold text-[--text] uppercase tracking-wide mb-4">
         Table of Contents
       </h3>

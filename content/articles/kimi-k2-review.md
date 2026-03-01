@@ -6,11 +6,9 @@ updated: "2026-02-11"
 category: "ai-models"
 description: "An in-depth review of Kimi K2, the affordable AI coding assistant from Moonshot AI."
 author: "David Park"
-authorImage: "/images/authors/david-park.jpg"
 tags: ["kimi k2", "moonshot ai", "budget ai", "coding assistant"]
 readTime: 8
 featured: false
-ogImage: "/images/articles/kimi-k2-review-og.jpg"
 ---
 
 # Kimi K2 Review: The Budget-Friendly AI Coding Assistant

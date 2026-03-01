@@ -6,11 +6,9 @@ updated: "2026-02-07"
 category: "coding-assistants"
 description: "How to use AI tools to automate and improve your code review process."
 author: "Nina Patel"
-authorImage: "/images/authors/nina-patel.jpg"
 tags: ["code review", "pull requests", "automation", "devops", "ci/cd"]
 readTime: 10
 featured: false
-ogImage: "/images/articles/ai-code-review-og.jpg"
 ---
 
 # AI Code Review Tools: Automate Your Pull Request Reviews

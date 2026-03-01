@@ -6,11 +6,9 @@ updated: "2026-02-13"
 category: "tools-comparison"
 description: "A detailed comparison of Google Gemini CLI and Anthropic Claude Code."
 author: "Alex Chen"
-authorImage: "/images/authors/alex-chen.jpg"
 tags: ["gemini cli", "claude code", "google", "anthropic", "ai comparison"]
 readTime: 11
 featured: true
-ogImage: "/images/articles/gemini-vs-claude-og.jpg"
 ---
 
 # Gemini CLI vs Claude Code: Which AI Coding Tool Wins?

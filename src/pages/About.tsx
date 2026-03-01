@@ -1,15 +1,23 @@
-import { Helmet } from 'react-helmet-async';
+import { Layout } from '../components/layout/Layout.js';
+import { SEOHead } from '../components/seo/SEOHead.js';
 
 export function About() {
   return (
-    <>
-      <Helmet>
-        <title>About - AIToolPeak</title>
-        <meta name="description" content="Learn about AIToolPeak - your trusted source for AI tools reviews and comparisons. Our expert team tests and reviews the latest AI coding assistants and tools." />
-      </Helmet>
+    <Layout>
+      <SEOHead
+        title="About"
+        description="Learn about AIToolPeak - your trusted source for AI tools reviews and comparisons. Our expert team tests and reviews the latest AI coding assistants and tools."
+        canonical="/about"
+      />
+
       <div className="max-w-3xl mx-auto px-4 py-16 lg:py-24">
-        <h1 className="text-4xl font-bold mb-8">About AIToolPeak</h1>
-        
+        <h1
+          className="text-4xl md:text-5xl font-bold mb-8 text-[--text]"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          About AIToolPeak
+        </h1>
+
         <div className="prose prose-lg max-w-none">
           <p className="text-xl text-[--text-muted] mb-8">
             Your trusted source for unbiased AI tools reviews and comparisons for developers.
@@ -17,15 +25,15 @@ export function About() {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Our Mission</h2>
           <p className="mb-4">
-            At AIToolPeak, we believe that finding the right AI tools for your development workflow 
-            shouldn't be a guessing game. Our mission is to provide comprehensive, hands-on reviews 
+            At AIToolPeak, we believe that finding the right AI tools for your development workflow
+            shouldn't be a guessing game. Our mission is to provide comprehensive, hands-on reviews
             and comparisons of AI tools to help developers make informed decisions.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Experience</h2>
           <p className="mb-4">
-            Our team has years of hands-on experience using AI tools in real-world development 
-            environments. We don't just read documentation—we test each tool extensively in 
+            Our team has years of hands-on experience using AI tools in real-world development
+            environments. We don't just read documentation—we test each tool extensively in
             production scenarios:
           </p>
           <ul className="list-disc pl-6 mb-4 space-y-2">
@@ -38,7 +46,7 @@ export function About() {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Expertise</h2>
           <p className="mb-4">
-            Our reviewers come from diverse backgrounds in software engineering, machine learning, 
+            Our reviewers come from diverse backgrounds in software engineering, machine learning,
             and DevOps. We have experience with:
           </p>
           <ul className="list-disc pl-6 mb-4 space-y-2">
@@ -87,11 +95,11 @@ export function About() {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Contact Us</h2>
           <p className="mb-4">
-            Have questions about our reviews or want to suggest a tool for review? 
+            Have questions about our reviews or want to suggest a tool for review?
             We'd love to hear from you. Visit our <a href="/contact" className="text-[--primary] hover:underline">Contact page</a> to reach out.
           </p>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }

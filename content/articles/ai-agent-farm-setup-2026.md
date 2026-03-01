@@ -6,11 +6,9 @@ updated: "2026-02-10"
 category: "devops"
 description: "A complete guide to building your own AI agent farm for automated development workflows."
 author: "Marcus Johnson"
-authorImage: "/images/authors/marcus-johnson.jpg"
 tags: ["ai agents", "automation", "devops", "infrastructure", "scaling"]
 readTime: 14
 featured: false
-ogImage: "/images/articles/ai-agent-farm-og.jpg"
 ---
 
 # How to Set Up Your Own AI Agent Farm in 2026
