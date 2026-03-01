@@ -40,7 +40,7 @@ export function useArticles(options: UseArticlesOptions = {}): UseArticlesReturn
     } finally {
       setLoading(false);
     }
-  }, [options]);
+  }, [options.category, options.tag, options.page, options.limit, options.featured]);
 
   useEffect(() => {
     refetch();
