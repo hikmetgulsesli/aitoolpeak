@@ -7,6 +7,16 @@
     <meta name="description" content="AIToolPeak - AI Tools review and comparison blog" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)" />
+    <script>
+      (function() {
+        try {
+          const stored = localStorage.getItem('theme') || 'system';
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = stored === 'dark' || (stored === 'system' && prefersDark);
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#030712' : '#ffffff');
+        } catch (e) {}
+      })();
+    </script>
     <!-- Google Fonts: Plus Jakarta Sans + Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
