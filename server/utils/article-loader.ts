@@ -74,9 +74,10 @@ marked.use({
       const id = slugify(text);
       return `\u003ch${depth} id="${id}"\u003e${text}\u003c/h${depth}\u003e`;
     },
-    table({ header, rows }: { header: string[]; rows: string[][] }) {
-      const thead = `\u003cthead\u003e\u003ctr\u003e${header.map(h => `\u003cth\u003e${h}\u003c/th\u003e`).join('')}\u003c/tr\u003e\u003c/thead\u003e`;
-      const tbody = `\u003ctbody\u003e${rows.map(row => `\u003ctr\u003e${row.map(cell => `\u003ctd\u003e${cell}\u003c/td\u003e`).join('')}\u003c/tr\u003e`).join('')}\u003c/tbody\u003e`;
+    table({ header, rows }: { header: any[]; rows: any[][] }) {
+      const gt = (c: any): string => typeof c === "string" ? c : c?.text ?? String(c ?? "");
+      const thead = `\u003cthead\u003e\u003ctr\u003e${header.map((h: any) => `\u003cth\u003e${gt(h)}\u003c/th\u003e`).join('')}\u003c/tr\u003e\u003c/thead\u003e`;
+      const tbody = `\u003ctbody\u003e${rows.map(row => `\u003ctr\u003e${row.map((cell: any) => `\u003ctd\u003e${gt(cell)}\u003c/td\u003e`).join('')}\u003c/tr\u003e`).join('')}\u003c/tbody\u003e`;
       return `\u003cdiv class="table-wrapper"\u003e\u003ctable\u003e${thead}${tbody}\u003c/table\u003e\u003c/div\u003e`;
     }
   }
