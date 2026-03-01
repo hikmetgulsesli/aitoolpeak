@@ -1,34 +1,40 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap');
 
 @theme {
   --color-bg: #ffffff;
-  --color-foreground: #1a1a1a;
-  --color-text: #1a1a1a;
+  --color-foreground: #111827;
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
   --color-text-muted: #6b7280;
   --color-border: #e5e7eb;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #3b82f6;
-  --color-surface: #f8fafc;
-  --color-surface-dark: #0f172a;
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-accent: #f59e0b;
+  --color-surface: #f9fafb;
+  --color-surface-dark: #111827;
+  --color-code-bg: #f9fafb;
+  --color-code-text: #1f2937;
 }
 
 :root {
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
 
   --bg: #ffffff;
-  --foreground: #1a1a1a;
-  --text: #1a1a1a;
+  --foreground: #111827;
+  --text: #111827;
+  --text-secondary: #4b5563;
   --text-muted: #6b7280;
   --border: #e5e7eb;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --accent: #3b82f6;
-  --surface: #f8fafc;
-  --surface-dark: #0f172a;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --accent: #f59e0b;
+  --surface: #f9fafb;
+  --surface-dark: #111827;
+  --code-bg: #f9fafb;
+  --code-text: #1f2937;
 
   font-family: var(--font-body);
   line-height: 1.6;
@@ -43,28 +49,55 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark mode via data attribute */
+[data-theme="dark"],
+.dark {
+  --bg: #030712;
+  --foreground: #f3f4f6;
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: #1f2937;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --accent: #fbbf24;
+  --surface: #111827;
+  --surface-dark: #030712;
+  --code-bg: #111827;
+  --code-text: #f3f4f6;
+  color-scheme: dark;
+}
+
+/* System preference fallback */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f172a;
-    --foreground: #f1f5f9;
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
-    --border: #1e293b;
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
-    --accent: #60a5fa;
-    --surface: #1e293b;
-    --surface-dark: #0f172a;
+  :root:not([data-theme="light"]) {
+    --bg: #030712;
+    --foreground: #f3f4f6;
+    --text: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border: #1f2937;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --accent: #fbbf24;
+    --surface: #111827;
+    --surface-dark: #030712;
+    --code-bg: #111827;
+    --code-text: #f3f4f6;
+    color-scheme: dark;
   }
 }
 
-* {
+a, button, input, textarea, select, span, div {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 a {
@@ -76,30 +109,63 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
   font-weight: 700;
+  color: var(--text);
 }
 
 button {
   font-family: inherit;
+  cursor: pointer;
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for theme changes */
+a, button, input, textarea, select, span, div {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions for performance on page load */
+.no-transitions * {
+  transition: none !important;
 }
 
 /* Prose styles for article content */
 .prose {
   max-width: 65ch;
   color: var(--foreground);
+  font-size: 1.125rem;
+  line-height: 1.8;
 }
 
 .prose h2 {
+  font-family: var(--font-heading);
   margin-top: 2em;
   margin-bottom: 0.75em;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .prose h3 {
+  font-family: var(--font-heading);
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  font-size: 1.375rem;
+  font-weight: 600;
 }
 
 .prose p {
   margin-bottom: 1.25em;
+  color: var(--text-secondary);
 }
 
 .prose ul, .prose ol {
@@ -109,36 +175,46 @@ button {
 
 .prose li {
   margin-bottom: 0.5em;
+  color: var(--text-secondary);
 }
 
 .prose a {
   color: var(--primary);
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--primary-hover);
 }
 
 .prose strong {
   font-weight: 600;
+  color: var(--text);
 }
 
 .prose code {
-  background: var(--border);
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.875em;
 }
 
 .prose pre {
-  background: #1e293b;
-  color: #f1f5f9;
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 1em;
   border-radius: 8px;
   overflow-x: auto;
   margin-bottom: 1.5em;
+  border: 1px solid var(--border);
 }
 
 .prose pre code {
   background: transparent;
   padding: 0;
+  border-radius: 0;
 }
 
 .prose blockquote {
@@ -146,7 +222,7 @@ button {
   padding-left: 1em;
   margin-left: 0;
   font-style: italic;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .prose img {
@@ -169,6 +245,14 @@ button {
 }
 
 .prose th {
-  background: var(--border);
+  background: var(--surface);
   font-weight: 600;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

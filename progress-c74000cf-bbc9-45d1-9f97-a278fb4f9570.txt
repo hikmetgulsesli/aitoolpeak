@@ -1,0 +1,56 @@
+=== US-001: Project Setup & Design Tokens ===
+COMPLETED: 2026-03-01T09:26:00+03:00
+FILES CHANGED: 
+  - .env.example (new)
+  - index.html (updated with fonts and theme script)
+  - src/index.css (design tokens)
+  - src/hooks/useTheme.ts (new)
+  - src/components/ui/ThemeToggle.tsx (new)
+  - src/components/layout/Header.tsx (updated)
+  - src/lib/theme.ts (new)
+KEY DECISIONS: 
+  - Used useSyncExternalStore for theme management to avoid React 19 eslint restrictions on setState in effects
+  - Theme initialization script in index.html prevents flash of wrong theme
+  - Design tokens implemented as CSS custom properties for easy theming
+DEPENDENCIES ADDED: None
+PR_URL: https://github.com/hikmetgulsesli/aitoolpeak/pull/2
+
+=== US-003: Express API Routes ===
+COMPLETED: 2026-03-01T08:56:00+03:00
+FILES CHANGED: server/routes/articles.ts, server/routes/categories.ts, server/routes/search.ts, server/routes/contact.ts, server/routes/sitemap.ts, server/index.ts, src/hooks/useTheme.ts, src/lib/theme.ts, src/components/ui/ThemeToggle.tsx, .env.example
+KEY DECISIONS: Used lunr for full-text search indexing, implemented pagination in article loader, created JSONL logging for contact form
+DEPENDENCIES ADDED: none (lunr was already in package.json)
+
+=== US-005: Layout Components ===
+COMPLETED: 2026-03-01T09:53:00+03:00
+FILES CHANGED: 
+  - src/index.css (updated with design tokens)
+  - src/lib/theme.ts (new)
+  - src/hooks/useTheme.ts (new)
+  - src/components/ui/ThemeToggle.tsx (new)
+  - src/components/layout/Header.tsx (updated)
+  - src/components/layout/Footer.tsx (updated)
+  - src/components/layout/Layout.tsx (updated)
+  - src/components/layout/MobileMenu.tsx (new)
+  - index.html (updated)
+KEY DECISIONS: 
+  - Used useSyncExternalStore for theme management
+  - Theme persisted in localStorage key "theme"
+  - CSS custom properties for all colors (light/dark modes)
+  - MobileMenu with slide-out navigation
+DEPENDENCIES ADDED: None
+
+=== US-006: SEO Infrastructure Components ===
+COMPLETED: 2026-03-01T09:53:00+03:00
+FILES CHANGED: 
+  - src/components/seo/SEOHead.tsx (enhanced)
+  - src/components/seo/JsonLd.tsx (new)
+  - src/components/seo/schema.ts (new)
+  - src/components/seo/Breadcrumbs.tsx (new)
+KEY DECISIONS: 
+  - Created separate schema.ts for structured data helpers
+  - JsonLd component for injecting JSON-LD scripts
+  - Breadcrumbs with both visual and JSON-LD representation
+  - SEOHead automatically adds WebSite or Article schema
+DEPENDENCIES ADDED: None
+PR_URL: https://github.com/hikmetgulsesli/aitoolpeak/pull/17
