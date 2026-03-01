@@ -1,42 +1,29 @@
-import { useState, useEffect, useCallback, useSyncExternalStore } from 'react';
-import type { Theme } from '../lib/theme.js';
+import { useState, useEffect, useCallback } from 'react';
+import type { Theme } from '../lib/theme';
 import { 
   getStoredTheme, 
   setStoredTheme, 
   applyTheme, 
   getSystemTheme 
-} from '../lib/theme.js';
-
-function getServerSnapshot() {
-  return 'system' as Theme;
-}
-
-function getClientSnapshot() {
-  return getStoredTheme();
-}
-
-function subscribe(callback: () => void) {
-  const handler = () => callback();
-  window.addEventListener('storage', handler);
-  return () => window.removeEventListener('storage', handler);
-}
+} from '../lib/theme';
 
 export function useTheme() {
   const [mounted, setMounted] = useState(false);
-  const theme = useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
-  const [isDark, setIsDark] = useState(false);
+  const [theme, setThemeState] = useState<Theme>(() => getStoredTheme());
+  const [isDark, setIsDark] = useState(() => {
+    const stored = getStoredTheme();
+    return stored === 'system' ? getSystemTheme() === 'dark' : stored === 'dark';
+  });
 
   // Initialize theme after mount to avoid hydration mismatch
   useEffect(() => {
     const stored = getStoredTheme();
-    const dark = stored === 'system' ? getSystemTheme() === 'dark' : stored === 'dark';
     applyTheme(stored);
-    // Batch state updates to avoid cascading renders
-    const timer = setTimeout(() => {
-      setIsDark(dark);
+    
+    // Use requestAnimationFrame to avoid setState in render warning
+    requestAnimationFrame(() => {
       setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
+    });
   }, []);
 
   // Update isDark when theme changes
@@ -69,6 +56,7 @@ export function useTheme() {
   }, [theme, mounted]);
 
   const setTheme = useCallback((newTheme: Theme) => {
+    setThemeState(newTheme);
     setStoredTheme(newTheme);
     applyTheme(newTheme);
     setIsDark(newTheme === 'system' ? getSystemTheme() === 'dark' : newTheme === 'dark');
